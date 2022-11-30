@@ -9,10 +9,9 @@ namespace WFADB_osszefoglalas
 
         public FrmMain() => InitializeComponent();
 
-        private void GetAllData(bool nagykoru)
+        private void GetAllData()
         {
-            selID = -1;
-            string? whereStm = nagykoru
+            string? whereStm = cb.Checked
                 ? "WHERE YEAR(GETDATE()) - YEAR(szul) >= 18"
                 : null;
 
@@ -39,12 +38,13 @@ namespace WFADB_osszefoglalas
             rbNoMOD.Checked = true;
             dtpSzul.Value = DateTime.Now;
             dtpSzulMOD.Value = DateTime.Now;
+            selID = -1;
         }
 
-        private void FrmMain_Load(object sender, EventArgs e) => GetAllData(false);
-        private void cb_CheckedChanged(object sender, EventArgs e) => GetAllData(cb.Checked);
+        private void FrmMain_Load(object sender, EventArgs e) => GetAllData();
+        private void Cb_CheckedChanged(object sender, EventArgs e) => GetAllData();
 
-        private void btnInsert_Click(object sender, EventArgs e)
+        private void BtnInsert_Click(object sender, EventArgs e)
         {
             string nev = tbNev.Text;
             string nem = rbFF.Checked ? "1" : "0";
@@ -52,8 +52,8 @@ namespace WFADB_osszefoglalas
 
             if (string.IsNullOrEmpty(nev))
                 MessageBox.Show(
-                    caption: "HIBA!!4!44!négy",
-                    text: "Töltsd ki a nevet b+!",
+                    caption: "HIBA",
+                    text: "A 'név' mezõ kitöltése kötelezõ!",
                     icon: MessageBoxIcon.Error,
                     buttons: MessageBoxButtons.OK);
             else
@@ -67,14 +67,14 @@ namespace WFADB_osszefoglalas
                     connection: conn);
                 SqlDataAdapter adptr = new()
                 {
-                    InsertCommand = cmd
+                    InsertCommand = cmd,
                 };
                 adptr.InsertCommand.ExecuteNonQuery();
-                GetAllData(cb.Checked);
+                GetAllData();
             }           
         }
 
-        private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void Dgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             tbNevMOD.Text = dgv[1, e.RowIndex].Value.ToString();
             rbFfMOD.Checked = dgv[2, e.RowIndex].Value.ToString() == "férfi";
@@ -83,11 +83,11 @@ namespace WFADB_osszefoglalas
             selID = (int)dgv[0, e.RowIndex].Value;
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+        private void BtnUpdate_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(tbNevMOD.Text))
                 MessageBox.Show(
-                    caption: "HIBA!!4!44!négy",
+                    caption: "HIBA!",
                     text: "Töltsd ki a nevet b+!",
                     icon: MessageBoxIcon.Error,
                     buttons: MessageBoxButtons.OK);
@@ -108,7 +108,33 @@ namespace WFADB_osszefoglalas
                     UpdateCommand = cmd
                 };
                 adptr.UpdateCommand.ExecuteNonQuery();
-                GetAllData(cb.Checked);
+                GetAllData();
+            }
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show(
+                caption: "MEGERÕSÍTÉS",
+                text: "Biztosan törölni kívánod a kijelölt recordot?\n" +
+                "a folyamat nem vonható vissza!",
+                buttons: MessageBoxButtons.YesNo,
+                icon: MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                SqlConnection conn = new(Resources.ConnectionString);
+                conn.Open();
+                SqlDataAdapter sda = new()
+                {
+                    DeleteCommand = new(
+                        cmdText: "DELETE FROM emberek " +
+                        $"WHERE id = {selID};",
+                        connection: conn),
+                };
+                sda.DeleteCommand.ExecuteNonQuery();
+
+                GetAllData();
             }
         }
     }

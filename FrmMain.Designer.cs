@@ -52,9 +52,12 @@
             this.rbNoMOD = new System.Windows.Forms.RadioButton();
             this.rbFfMOD = new System.Windows.Forms.RadioButton();
             this.tbNevMOD = new System.Windows.Forms.TextBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgv
@@ -79,7 +82,7 @@
             this.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv.Size = new System.Drawing.Size(773, 271);
             this.dgv.TabIndex = 0;
-            this.dgv.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellClick);
+            this.dgv.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_CellClick);
             // 
             // Column1
             // 
@@ -112,13 +115,13 @@
             // cb
             // 
             this.cb.AutoSize = true;
-            this.cb.Location = new System.Drawing.Point(24, 306);
+            this.cb.Location = new System.Drawing.Point(65, 336);
             this.cb.Name = "cb";
             this.cb.Size = new System.Drawing.Size(124, 24);
             this.cb.TabIndex = 1;
             this.cb.Text = "csak nagykorú";
             this.cb.UseVisualStyleBackColor = true;
-            this.cb.CheckedChanged += new System.EventHandler(this.cb_CheckedChanged);
+            this.cb.CheckedChanged += new System.EventHandler(this.Cb_CheckedChanged);
             // 
             // dtpSzul
             // 
@@ -148,6 +151,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackColor = System.Drawing.Color.MediumSpringGreen;
             this.groupBox1.Controls.Add(this.btnInsert);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
@@ -171,7 +175,7 @@
             this.btnInsert.TabIndex = 6;
             this.btnInsert.Text = "HOZZÁAD";
             this.btnInsert.UseVisualStyleBackColor = true;
-            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
+            this.btnInsert.Click += new System.EventHandler(this.BtnInsert_Click);
             // 
             // label3
             // 
@@ -214,7 +218,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.BackColor = System.Drawing.Color.LightCoral;
+            this.groupBox2.BackColor = System.Drawing.Color.LightSkyBlue;
             this.groupBox2.Controls.Add(this.btnUpdate);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label5);
@@ -223,7 +227,7 @@
             this.groupBox2.Controls.Add(this.rbNoMOD);
             this.groupBox2.Controls.Add(this.rbFfMOD);
             this.groupBox2.Controls.Add(this.tbNevMOD);
-            this.groupBox2.Location = new System.Drawing.Point(211, 306);
+            this.groupBox2.Location = new System.Drawing.Point(245, 306);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(267, 175);
             this.groupBox2.TabIndex = 5;
@@ -238,7 +242,7 @@
             this.btnUpdate.TabIndex = 6;
             this.btnUpdate.Text = "MÓDOSÍTÁS";
             this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            this.btnUpdate.Click += new System.EventHandler(this.BtnUpdate_Click);
             // 
             // label4
             // 
@@ -305,11 +309,33 @@
             this.tbNevMOD.Size = new System.Drawing.Size(167, 27);
             this.tbNevMOD.TabIndex = 3;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.BackColor = System.Drawing.Color.LightCoral;
+            this.groupBox3.Controls.Add(this.btnDelete);
+            this.groupBox3.Location = new System.Drawing.Point(24, 404);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(215, 77);
+            this.groupBox3.TabIndex = 6;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "törlés:";
+            // 
+            // button1
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(6, 26);
+            this.btnDelete.Name = "button1";
+            this.btnDelete.Size = new System.Drawing.Size(203, 32);
+            this.btnDelete.TabIndex = 0;
+            this.btnDelete.Text = "KIJELÖLT RECORD TÖRLÉSE";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(797, 509);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cb);
@@ -322,6 +348,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -353,5 +380,7 @@
         private RadioButton rbNoMOD;
         private RadioButton rbFfMOD;
         private TextBox tbNevMOD;
+        private GroupBox groupBox3;
+        private Button btnDelete;
     }
 }
